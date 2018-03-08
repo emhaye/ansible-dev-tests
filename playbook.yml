@@ -1,0 +1,7 @@
+- hosts: hello-mahyuddin
+
+  roles:
+    - hostname
+    - ssh
+    - base
+    - nginx

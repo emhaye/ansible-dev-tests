@@ -1,0 +1,12 @@
+---
+# tasks file for roles/base
+#
+
+- name: Update repository
+  apt: update_cache=yes cache_valid_time=3600
+
+- name: Install packages python3 and openjdk
+  apt: pkg={{ item }} state=latest
+  with_items:
+    - python3
+    - openjdk-8-jdk 

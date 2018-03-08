@@ -1,0 +1,5 @@
+---
+# defaults file for roles/hostname
+#
+# Define the server should reboot after change the hostname
+change_hostname_reboot: true

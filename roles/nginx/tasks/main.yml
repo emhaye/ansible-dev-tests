@@ -1,0 +1,28 @@
+---
+# tasks file for roles/nginx
+#
+
+- name: Update repository
+  apt: update_cache=yes cache_valid_time=3600
+
+- name: Installe nginx
+  apt: name={{ item }} state=present
+  with_items:
+    - nginx
+  notify: "Restart nginx"
+
+- name: Remove default nginx configuration
+  file: path=/etc/nginx/sites-enabled/default state=absent
+  notify: "Restart nginx"
+
+- name: Download index.html and force auth
+  get_url:
+    url: http://DOMAIN_NAME/index.html
+    dest: /var/www/html/index.html
+    force_basic_auth: yes
+    owner: www-data
+    group: www-data
+
+- name: Copying nginx configuration
+  template: src=default.conf.j2 dest=/etc/nginx/conf.d/default.conf
+  notify: "Restart nginx"
